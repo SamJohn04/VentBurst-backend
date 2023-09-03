@@ -1,11 +1,11 @@
-const Chat = require('../Models/chatModel')
+const Post = require('../Models/postModel')
 const asyncHandler = require('express-async-handler')
 
-const chatMessage = asyncHandler(async (req, res) => {
+const createPost = asyncHandler(async (req, res) => {
     const { content } = req.body;
 
     if (!content) {
-        res.status(401).json({message: "Field is empty!"})
+        res.status(400).json({message: "Field is empty!"})
     }
 
     const newChat = {
@@ -14,7 +14,7 @@ const chatMessage = asyncHandler(async (req, res) => {
     };
 
     try {
-        let message = await Chat.create(newChat);
+        let message = await Post.create(newChat);
 
         message = await message.populate("sender")
 
@@ -26,16 +26,16 @@ const chatMessage = asyncHandler(async (req, res) => {
 })
 
 
-const chatHistory = asyncHandler(async (req, res) => {
+const postHistory = asyncHandler(async (req, res) => {
     const userId = req.params.id;
 
     try {
-        const chatVent = await Chat.find({sender: userId}).sort({ timestamps: -1 }).limit(10);
-        res.json(chatVent);
+        const chatVent = await Post.find({sender: userId}).sort({ timestamp: -1 }).limit(10);
+        return res.json(chatVent);
     } catch (error) {
         res.status(500).json({ error: 'Failed to retrieve chat history' });
     }
 })
 
 
-module.exports = { chatMessage, chatHistory }
+module.exports = { createPost, postHistory }

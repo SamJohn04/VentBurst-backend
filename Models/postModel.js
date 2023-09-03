@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const chatSchema = new Schema(
+const postSchema = new Schema(
     {
         sender: {
             type: mongoose.Schema.Types.ObjectId,
@@ -13,12 +13,9 @@ const chatSchema = new Schema(
         },
     },
     {
-        timestamps: {
-            type: Date,
-            default: Date.now()
-        },
+        timestamps: true,
     }
 )
 
 
-module.exports = mongoose.model('Chat', chatSchema)
+module.exports = mongoose.model('Post', postSchema)
