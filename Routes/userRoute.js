@@ -12,6 +12,7 @@ router.post('/signup', userSignup)
 router.post('/login', userLogin)
 router.post('/post', protect, createPost)
 router.get('/myVent/:id', protect, postHistory)
+router.post('/post/:postId/comments', protect, createComment)
 router.post('/post/:postId/comments/:commentId', protect, createComment)
 router.get('/comments', protect, allComment)
 
