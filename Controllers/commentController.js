@@ -16,6 +16,8 @@ const createComment = asyncHandler(async (req, res) => {
             parentPost: req.params.postId,
             parentComment: req.params.commentId,
         })
+
+        io.emit('newComment', newComment);
         
         const savedComment = await newComment.save()
 
